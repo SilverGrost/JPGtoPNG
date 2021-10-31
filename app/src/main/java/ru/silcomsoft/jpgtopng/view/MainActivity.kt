@@ -1,7 +1,8 @@
-package ru.silcomsoft.jpgtopng
+package ru.silcomsoft.jpgtopng.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.silcomsoft.jpgtopng.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
