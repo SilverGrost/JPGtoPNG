@@ -110,7 +110,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
     private val permissionRequestWriteFile =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
-                presenter.convertStart()
+                presenter.convertStart(this)
             } else {
                 showMessage(getString(R.string.permission_failed_to_write_files))
             }
@@ -144,13 +144,13 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
     }
 
     private fun checkWriteFilesPermission() {
-        if (ContextCompat.checkSelfPermission(
+        /*if (ContextCompat.checkSelfPermission(
                 this,
                 PERMISSIONS_WRITE
             ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            presenter.convertStart()
-        } else {
+        ) {*/
+            presenter.convertStart(this)
+        /*} else {
             if (shouldShowRequestPermissionRationale(PERMISSIONS_WRITE)) {
                 Snackbar.make(
                     binding.root,
@@ -163,7 +163,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
             } else {
                 permissionRequestWriteFile.launch(PERMISSIONS_WRITE)
             }
-        }
+        }*/
     }
 
     private fun convertStart() {

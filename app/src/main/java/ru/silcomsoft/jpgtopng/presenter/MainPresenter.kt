@@ -1,6 +1,7 @@
 package ru.silcomsoft.jpgtopng.presenter
 
 
+import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import io.reactivex.disposables.CompositeDisposable
@@ -28,9 +29,10 @@ class MainPresenter(
         viewState.chooseImage()
     }
 
-    fun convertStart() {
+    fun convertStart(context: Context) {
         viewState.showLoading(true)
-        val toSaveFile = File(Environment.getExternalStorageDirectory().toString(), DEF_FILE_NAME)
+        //val toSaveFile = File(Environment.getExternalStorageDirectory().toString(), DEF_FILE_NAME)
+        val toSaveFile = File(context.cacheDir, DEF_FILE_NAME)
 
         when (uriSelected) {
             null -> {
