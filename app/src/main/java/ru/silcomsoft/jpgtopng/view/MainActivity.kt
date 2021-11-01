@@ -14,7 +14,6 @@ import ru.silcomsoft.jpgtopng.R
 import ru.silcomsoft.jpgtopng.presenter.MainPresenter
 import moxy.ktx.moxyPresenter
 import ru.silcomsoft.jpgtopng.Constant.PERMISSIONS_READ
-import ru.silcomsoft.jpgtopng.Constant.PERMISSIONS_WRITE
 import ru.silcomsoft.jpgtopng.databinding.ActivityMainBinding
 import ru.silcomsoft.jpgtopng.model.ImageConverterFactory
 import ru.silcomsoft.jpgtopng.model.scheduler.SchedulerFactory
@@ -53,6 +52,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .error(R.drawable.ic_img_def)
             .into(binding.completeImg)
+        binding.textView4.text = uri.toString()
     }
 
     override fun useConvertButtons(use: Boolean) {
@@ -107,15 +107,6 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
             }
         }
 
-    private val permissionRequestWriteFile =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                presenter.convertStart(this)
-            } else {
-                showMessage(getString(R.string.permission_failed_to_write_files))
-            }
-        }
-
     private fun checkReadFilesPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -143,31 +134,8 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainView {
         checkReadFilesPermission()
     }
 
-    private fun checkWriteFilesPermission() {
-        /*if (ContextCompat.checkSelfPermission(
-                this,
-                PERMISSIONS_WRITE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {*/
-            presenter.convertStart(this)
-        /*} else {
-            if (shouldShowRequestPermissionRationale(PERMISSIONS_WRITE)) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.need_permission_write_file),
-                    Snackbar.LENGTH_LONG
-                ).setAction(getString(R.string.grant))
-                {
-                    permissionRequestWriteFile.launch(PERMISSIONS_WRITE)
-                }.show()
-            } else {
-                permissionRequestWriteFile.launch(PERMISSIONS_WRITE)
-            }
-        }*/
-    }
-
     private fun convertStart() {
-        checkWriteFilesPermission()
+        presenter.convertStart(this)
     }
 
     private fun convertCancel() {
